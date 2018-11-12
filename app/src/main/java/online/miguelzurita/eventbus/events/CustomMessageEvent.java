@@ -1,4 +1,4 @@
-package online.miguelzurita.eventbus;
+package online.miguelzurita.eventbus.events;
 
 public class CustomMessageEvent {
     private String customMessage;

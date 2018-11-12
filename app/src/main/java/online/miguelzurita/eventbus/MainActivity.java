@@ -11,6 +11,9 @@ import android.widget.EditText;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import online.miguelzurita.eventbus.events.CustomMessageEvent;
+import online.miguelzurita.eventbus.events.GoEvent;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText resultsEditText;
@@ -23,9 +26,10 @@ public class MainActivity extends AppCompatActivity {
 
         EventBus.getDefault().register(this);
 
-        resultsEditText = (EditText)findViewById(R.id.resultsEditText);
-        launchButton = (Button)findViewById(R.id.launchButton);
+        resultsEditText = (EditText) findViewById(R.id.resultsEditText);
+        launchButton = (Button) findViewById(R.id.launchButton);
 
+        //Ir a la segunda actividad
         launchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,8 +40,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Subscribe
-    public void onEvent(CustomMessageEvent event){
+    public void onEvent(CustomMessageEvent event) {
         Log.d("App", "Event fired " + event.getCustomMessage());
         resultsEditText.setText(event.getCustomMessage());
+    }
+
+    @Subscribe
+    public void onGoEvent(GoEvent goEvent) {
+        if (!goEvent.message1.isEmpty()) {
+            resultsEditText.setText(goEvent.message1);
+        }
+
+        if (!goEvent.message2.isEmpty()) {
+            resultsEditText.setText(goEvent.message2);
+        }
+
     }
 }
